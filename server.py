@@ -59,11 +59,11 @@ def ftp_room_prompt(ftp_rooms, client):
     username = client.recv(BUFFER_SIZE).decode("utf-8")
 
     welcome = (
-        "Welcome to the FTP server!\n"
-        "You can either join an existing FTP room or create a new one.\n"
-        "Enter the name of the FTP room you wish to join or enter 'NEW' to create a new FTP room.\n"
-        "(If none are listed, create one).\n\n"
-        "Send any files you want! To quit, enter 'CLOSE'.\n"
+       "🚀 Welcome to FAST ShareNet - Your Real-Time File Exchange Hub!\n"
+        "📁 Instantly join or create a room to start sharing files with others.\n"
+        "💬 Communicate and collaborate seamlessly in dedicated exchange rooms.\n\n"
+        "🔹 Type the name of a room to join it, or type 'NEW' to create your own.\n"
+        "❌ Type 'CLOSE' anytime to leave the server.\n"
     )
     client.send(welcome.encode("utf-8"))
 
@@ -71,7 +71,8 @@ def ftp_room_prompt(ftp_rooms, client):
         for room in ftp_rooms:
             client.send(f"   {room}\n".encode("utf-8"))
     else:
-        client.send("There are no rooms available to join. Create a new one!".encode("utf-8"))
+        client.send("🚫 No exchange rooms currently available.\n🆕 Type 'NEW' to create the first one and get started!"
+.encode("utf-8"))
 
     raw_choice = client.recv(BUFFER_SIZE).decode("utf-8")
     choice = clean_message(raw_choice)
@@ -139,12 +140,12 @@ if __name__ == "__main__":
                 if ftp_room:
                     ftp_room.add_client(client, username)
                     print(f"{username} joined {ftp_room}.")
-                    ftp_room.send_message(f"{username} has joined the exchange room!".encode("utf-8"))
+                    ftp_room.send_message(f"✅ {username} has joined the exchange room!".encode("utf-8"))
                 else:
                     ftp_room = FTPRoom(room_name)
                     ftp_room.add_client(client, username)
                     exchange_rooms.append(ftp_room)
-                    print(f"{username} created new exchange room '{room_name}'.")
+                    print(f"✅ {username} created new exchange room '{room_name}'.")
                     ftp_room.send_message(f"{username} has created an exchange room!".encode("utf-8"))
 
                 thread = t.Thread(target=handle_client, args=(ftp_room, client, username))

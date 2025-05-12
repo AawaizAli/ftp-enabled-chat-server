@@ -7,7 +7,7 @@ import re
 
 SERVER_IP = "127.0.0.1"
 PORT = 8080
-BUFFER_SIZE = 4096
+BUFFER_SIZE = 2048
 FILE_PATH_PATTERN = r'^(.+/)*[^/]+\.[a-zA-Z0-9]+$'
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
